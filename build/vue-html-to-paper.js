@@ -4,12 +4,12 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.VueHtmlToPaper = factory());
 }(this, (function () { 'use strict';
 
-  function addStyles (win, styles) {
+  function addStyles (win, styles, styleLinkType) {
     styles.forEach(style => {
       let link = win.document.createElement('link');
       link.setAttribute('rel', 'stylesheet');
       link.setAttribute('type', 'text/css');
-      link.setAttribute('href', style);
+      link.setAttribute(styleLinkType, style);
       win.document.getElementsByTagName('head')[0].appendChild(link);
     });
   }
@@ -31,11 +31,13 @@
           defaultSpecs = ['fullscreen=yes','titlebar=yes', 'scrollbars=yes'],
           defaultReplace = true,
           defaultStyles = [];
+          defaultStyleLinkType = 'href';
         let {
           name = defaultName,
           specs = defaultSpecs,
           replace = defaultReplace,
           styles = defaultStyles,
+          styleLinkType = defaultStyleLinkType,
         } = options;
 
         // If has localOptions
@@ -45,6 +47,7 @@
           if (localOptions.specs) specs = localOptions.specs;
           if (localOptions.replace) replace = localOptions.replace;
           if (localOptions.styles) styles = localOptions.styles;
+          if (localOptions.styleLinkType) styleLinkType = localOptions.styleLinkType;
         }
 
         specs = !!specs.length ? specs.join(',') : '';
@@ -70,7 +73,7 @@
         </html>
       `);
 
-        addStyles(win, styles);
+        addStyles(win, styles, styleLinkType);
         
         setTimeout(() => {
           win.document.close();
