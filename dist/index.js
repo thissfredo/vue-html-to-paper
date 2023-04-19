@@ -2,12 +2,12 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function addStyles (win, styles, styleLinkType) {
+function addStyles (win, styles) {
   styles.forEach(style => {
     let link = win.document.createElement('link');
     link.setAttribute('rel', 'stylesheet');
     link.setAttribute('type', 'text/css');
-    link.setAttribute(styleLinkType, style);
+    link.setAttribute('href', style);
     win.document.getElementsByTagName('head')[0].appendChild(link);
   });
 }
@@ -29,13 +29,11 @@ const VueHtmlToPaper = {
         defaultSpecs = ['fullscreen=yes','titlebar=yes', 'scrollbars=yes'],
         defaultReplace = true,
         defaultStyles = [];
-      let defaultStyleLinkType = 'href';
       let {
         name = defaultName,
         specs = defaultSpecs,
         replace = defaultReplace,
-        styles = defaultStyles,
-        styleLinkType = defaultStyleLinkType,
+        styles = defaultStyles
       } = options;
 
       // If has localOptions
@@ -45,7 +43,6 @@ const VueHtmlToPaper = {
         if (localOptions.specs) specs = localOptions.specs;
         if (localOptions.replace) replace = localOptions.replace;
         if (localOptions.styles) styles = localOptions.styles;
-        if (localOptions.styleLinkType) styleLinkType = localOptions.styleLinkType;
       }
 
       specs = !!specs.length ? specs.join(',') : '';
@@ -71,7 +68,7 @@ const VueHtmlToPaper = {
         </html>
       `);
 
-      addStyles(win, styles, styleLinkType);
+      addStyles(win, styles);
       
       setTimeout(() => {
         win.document.close();
