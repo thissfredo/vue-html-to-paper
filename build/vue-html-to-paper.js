@@ -31,7 +31,7 @@
           defaultSpecs = ['fullscreen=yes','titlebar=yes', 'scrollbars=yes'],
           defaultReplace = true,
           defaultStyles = [];
-          defaultStyleLinkType = 'href';
+        let defaultStyleLinkType = 'href';
         let {
           name = defaultName,
           specs = defaultSpecs,
